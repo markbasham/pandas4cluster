@@ -22,7 +22,7 @@ data.index = data.pop('submission_time')
 
 # Some info
 data['util'] = data['cpu']/(data['ru_wallclock']*data['slots'])
-data['util'][data['util'] == inf] = np.NaN
+data['util'][data['util'] == np.inf] = np.NaN
 a = data['util'].hist(bins=500)
 a.set_yscale('log')
 
