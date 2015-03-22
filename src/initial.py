@@ -6,6 +6,7 @@ Created on 20 Mar 2015
 
 # needs %pylab
 
+import numpy as np
 import pandas as pd
 import logging
 
@@ -18,6 +19,13 @@ for times in ['submission_time', 'start_time', 'end_time']:
         logging.warn("Could not convert %s", times)
 
 data.index = data.pop('submission_time')
+
+# Some info
+data['util'] = data['cpu']/(data['ru_wallclock']*data['slots'])
+data['util'][data['util'] == inf] = np.NaN
+a = data['util'].hist(bins=500)
+a.set_yscale('log')
+
 
 monthly_cpu_usage = data.cpu.resample('M', how=['sum'])
 monthly_cpu_usage.tail(23).plot()
